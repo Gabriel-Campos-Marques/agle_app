@@ -8,8 +8,6 @@ final themeApp = ThemeData(
     onSecondary: Colors.white,
     error: Colors.pink,
     onError: Colors.pink,
-    background: Color.fromARGB(255, 255, 255, 255),
-    onBackground: Colors.blue,
     surface: Colors.white,
     onSurface: Colors.black,
     onPrimary: Color.fromRGBO(233, 244, 255, 1),

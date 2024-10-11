@@ -1,7 +1,6 @@
+import 'package:agle_app/pages/login_page.dart';
 import 'package:agle_app/theme/theme.dart';
 import 'package:flutter/material.dart';
-
-import 'pages/home_page.dart';
 
 void main() {
   runApp(const AgleAPP());
@@ -16,7 +15,7 @@ class AgleAPP extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Agle',
       theme: themeApp,
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
