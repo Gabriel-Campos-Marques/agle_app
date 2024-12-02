@@ -3,11 +3,12 @@ import 'package:agle_app/controllers/items_menu_bar_controller.dart';
 import 'package:agle_app/controllers/pages_controller.dart';
 import 'package:agle_app/controllers/status_task_controller.dart';
 import 'package:agle_app/controllers/tasks_controller.dart';
+import 'package:agle_app/controllers/type_task_controller.dart';
 import 'package:agle_app/models/item_header_column.dart';
 import 'package:agle_app/models/item_menu_bar.dart';
 import 'package:agle_app/models/status_task.dart';
 import 'package:agle_app/models/tasks.dart';
-import 'package:agle_app/pages/homePage/home_page.dart';
+import 'package:agle_app/pages/login/login_page.dart';
 import 'package:agle_app/theme/theme.dart';
 import 'package:agle_app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +30,25 @@ void main() {
                 isSubMenu: false,
               ),
               ItemMenuBar(
-                icon: Icons.checklist,
-                label: 'Tarefas',
+                icon: Icons.all_inbox,
+                label: 'Caixa de entrada',
                 index: 1,
+                selected: false,
+                isPageMenu: false,
+                isSubMenu: false,
+              ),
+              ItemMenuBar(
+                icon: Icons.checklist,
+                label: 'Tarefas do projeto',
+                index: 2,
+                selected: false,
+                isPageMenu: false,
+                isSubMenu: false,
+              ),
+              ItemMenuBar(
+                icon: Icons.sticky_note_2,
+                label: 'Anotações do projeto',
+                index: 3,
                 selected: false,
                 isPageMenu: false,
                 isSubMenu: false,
@@ -40,6 +57,7 @@ void main() {
           ),
         ),
         ChangeNotifierProvider(create: (context) => PagesController()),
+        ChangeNotifierProvider(create: (context) => TypeTaskController()),
         ChangeNotifierProvider(
           create: (context) => ItemsHeaderColumnController(
             headers: [
@@ -98,6 +116,20 @@ void main() {
                 priorityIcon: Icons.keyboard_double_arrow_down,
                 iconCheckBox: Icons.check_box_outline_blank_rounded,
               ),
+              Tasks(
+                code: 'AI-247',
+                title: 'Como resolver outro problema?',
+                area: 'Estudos',
+                priority: 5,
+                status: 'Em aberto',
+                dateCreate: DateTime.now(),
+                deliveryDate: DateTime.now(),
+                responsible: 'Gabriel Campos Marques',
+                pictureResponsible: bytes,
+                priorityColor: priorityHigh,
+                priorityIcon: Icons.keyboard_double_arrow_down,
+                iconCheckBox: Icons.check_box_outline_blank_rounded,
+              ),
             ],
           ),
         ),
@@ -126,7 +158,7 @@ class AgleAPP extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Agle',
       theme: themeApp,
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }

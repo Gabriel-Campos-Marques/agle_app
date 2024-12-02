@@ -2,12 +2,12 @@ import 'package:agle_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppBarAgle extends StatelessWidget {
-  final String title;
-
   const AppBarAgle({
     super.key,
-    required this.title,
+    this.title,
   });
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AppBarAgle extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
-        title.toUpperCase(),
+        title == null ? 'Projeto Integrador' : title!,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 30,

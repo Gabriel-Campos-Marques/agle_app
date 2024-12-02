@@ -1,5 +1,6 @@
-import 'package:agle_app/models/model.login.dart';
+import 'package:agle_app/pages/homePage/home_page.dart';
 import 'package:agle_app/pages/widgets/button_login_platform.dart';
+import 'package:agle_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,16 +13,6 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  void _handleLogin() async {
-    final String email = _emailController.text;
-    final String password = _passwordController.text;
-
-    if (email.isNotEmpty && password.isNotEmpty) {
-      ModelLogin loginModel = ModelLogin(username: email, password: password);
-      await loginModel.login();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,39 +59,94 @@ class LoginPageState extends State<LoginPage> {
                         fit: BoxFit.cover),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Text(
                   'Faça login para continuar',
                   style: TextStyle(
                     fontSize: 22,
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Expanded(
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                            labelText: 'E-mail',
+                      Container(
+                        width: 400,
+                        height: 55,
+                        decoration: BoxDecoration(
+                          color: secondColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: _emailController,
+                            cursorColor: textColorPrimary,
+                            decoration: InputDecoration(
+                              labelText: 'E-mail',
+                              border: InputBorder.none,
+                              labelStyle: TextStyle(
+                                color: textColorPrimary,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child: TextField(
-                          controller: _passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            labelText: 'Senha',
+                        child: Container(
+                          width: 400,
+                          height: 55,
+                          decoration: BoxDecoration(
+                            color: secondColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              cursorColor: textColorPrimary,
+                              decoration: InputDecoration(
+                                labelText: 'Senha',
+                                border: InputBorder.none,
+                                labelStyle: TextStyle(
+                                  color: textColorPrimary,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child: ElevatedButton(
-                          onPressed: _handleLogin,
-                          child: const Text('Login'),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()));
+                          },
+                          child: Container(
+                            height: 55,
+                            width: 400,
+                            decoration: BoxDecoration(
+                                color: thirdColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: Text(
+                                'Entrar',
+                                style: TextStyle(
+                                  color: textColorThird,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       const Text(

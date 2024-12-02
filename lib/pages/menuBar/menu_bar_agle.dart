@@ -1,4 +1,5 @@
 import 'package:agle_app/controllers/pages_controller.dart';
+import 'package:agle_app/pages/configPage/config_page.dart';
 import 'package:agle_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,10 +62,20 @@ class _MenuBarAgleState extends State<MenuBarAgle> {
               },
             ),
           ),
-          const ItemMenu(
-            iconMenuBar: Icons.settings,
-            nameItemMenuBar: 'Configurações',
-            pageItem: true,
+          InkWell(
+            child: const ItemMenu(
+              iconMenuBar: Icons.settings,
+              nameItemMenuBar: 'Configurações',
+              pageItem: true,
+            ),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ConfigPage();
+                },
+              );
+            },
           ),
         ],
       ),

@@ -1,8 +1,9 @@
+import 'package:agle_app/controllers/type_task_controller.dart';
 import 'package:agle_app/pages/widgets/button_agle.dart';
-import 'package:agle_app/pages/widgets/kanban_agle.dart';
 import 'package:agle_app/pages/widgets/search_agle.dart';
 import 'package:agle_app/pages/widgets/select_task_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/app_bar_agle.dart';
 
@@ -18,34 +19,34 @@ class TaskPage extends StatelessWidget {
         color: Colors.white,
         child: Column(
           children: [
-            const AppBarAgle(
-              title: 'Projeto integrador',
-            ),
+            const AppBarAgle(),
             Expanded(
               child: SizedBox(
                 width: double.maxFinite,
                 height: double.maxFinite,
                 child: Column(
                   children: [
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             SearchAgle(),
-                            SelectTaskPage(
-                              selectedKanban: true,
-                              selectedList: false,
-                            ),
+                            SelectTaskPage(),
                           ],
                         ),
                         ButtonAgle(
                           textButton: 'Nova Tarefa',
+                          function: () {},
                         )
                       ],
                     ),
-                    Expanded(
-                      child: KanbanAgle(),
+                    Consumer<TypeTaskController>(
+                      builder: (context, typeTask, child) {
+                        return Expanded(
+                          child: typeTask.currentTypeTask,
+                        );
+                      },
                     ),
                   ],
                 ),
