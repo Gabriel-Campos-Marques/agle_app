@@ -7,6 +7,7 @@ class ItemMenu extends StatelessWidget {
   final bool subMenu;
   final bool pageItem;
   final bool selected;
+  final bool iconAreaClick;
 
   const ItemMenu({
     super.key,
@@ -15,6 +16,7 @@ class ItemMenu extends StatelessWidget {
     this.subMenu = false,
     this.pageItem = false,
     this.selected = false,
+    this.iconAreaClick = false,
   });
 
   @override
@@ -52,12 +54,17 @@ class ItemMenu extends StatelessWidget {
                 subMenu
                     ? Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: textColorPrimary,
-                          size: 40,
-                        ),
-                      )
+                        child: !iconAreaClick
+                            ? Icon(
+                                Icons.keyboard_arrow_down,
+                                color: textColorPrimary,
+                                size: 40,
+                              )
+                            : Icon(
+                                Icons.keyboard_arrow_up,
+                                color: textColorPrimary,
+                                size: 40,
+                              ))
                     : const SizedBox()
               ],
             ),

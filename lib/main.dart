@@ -1,13 +1,17 @@
-import 'package:agle_app/controllers/items_header_column_controller.dart';
+import 'package:agle_app/controllers/areas_controller.dart';
 import 'package:agle_app/controllers/items_menu_bar_controller.dart';
 import 'package:agle_app/controllers/pages_controller.dart';
+import 'package:agle_app/controllers/projects_controller.dart';
 import 'package:agle_app/controllers/status_task_controller.dart';
 import 'package:agle_app/controllers/tasks_controller.dart';
 import 'package:agle_app/controllers/type_task_controller.dart';
-import 'package:agle_app/models/item_header_column.dart';
+import 'package:agle_app/controllers/users.controller.dart';
+import 'package:agle_app/models/areas.dart';
 import 'package:agle_app/models/item_menu_bar.dart';
+import 'package:agle_app/models/projects.dart';
 import 'package:agle_app/models/status_task.dart';
 import 'package:agle_app/models/tasks.dart';
+import 'package:agle_app/models/user.dart';
 import 'package:agle_app/pages/login/login_page.dart';
 import 'package:agle_app/theme/theme.dart';
 import 'package:agle_app/utils/constants.dart';
@@ -18,6 +22,45 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (context) => UsersController(users: [
+            User(name: 'Gabriel Campos Marques', id: 1, image: bytesGabriel),
+            User(name: 'Luiz Fernando', id: 2, image: bytesLuiz),
+            User(name: 'Elton Ziviane', id: 3, image: bytesElton),
+            User(name: 'André Vitor', id: 4, image: bytesAndre),
+          ]),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ProjectsController(projects: [
+            Projects(
+              nameProject: 'Pessoal',
+              idProject: 1,
+              image: bytesPessoal,
+            ),
+            Projects(
+              nameProject: 'Trabalho',
+              idProject: 2,
+              image: bytesTrabalho,
+            ),
+            Projects(
+              nameProject: 'Projeto Integrador',
+              idProject: 3,
+              image: bytesProjetoIntegrador,
+            ),
+            Projects(
+              nameProject: 'Faculdade',
+              idProject: 4,
+              image: bytesFaculdade,
+            ),
+          ]),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AreasController(areas: [
+            Areas(nameArea: 'Parte escrita', index: 0),
+            Areas(nameArea: 'Desenvolvimento', index: 1),
+            Areas(nameArea: 'Custos', index: 2),
+          ]),
+        ),
         ChangeNotifierProvider(
           create: (context) => ItemsMenuBarController(
             items: [
@@ -53,52 +96,19 @@ void main() {
                 isPageMenu: false,
                 isSubMenu: false,
               ),
+              ItemMenuBar(
+                icon: Icons.workspaces,
+                label: 'Áreas',
+                index: 4,
+                selected: false,
+                isPageMenu: true,
+                isSubMenu: true,
+              ),
             ],
           ),
         ),
         ChangeNotifierProvider(create: (context) => PagesController()),
         ChangeNotifierProvider(create: (context) => TypeTaskController()),
-        ChangeNotifierProvider(
-          create: (context) => ItemsHeaderColumnController(
-            headers: [
-              ItemHeaderColumn(
-                nameColumn: 'Checkbox',
-                widthColumn: 50,
-                indexHeader: 0,
-              ),
-              ItemHeaderColumn(
-                nameColumn: 'Título',
-                widthColumn: 150,
-                indexHeader: 1,
-              ),
-              ItemHeaderColumn(
-                nameColumn: 'Área',
-                widthColumn: 200,
-                indexHeader: 2,
-              ),
-              ItemHeaderColumn(
-                nameColumn: 'Prioridade',
-                widthColumn: 100,
-                indexHeader: 3,
-              ),
-              ItemHeaderColumn(
-                nameColumn: 'Status',
-                widthColumn: 100,
-                indexHeader: 4,
-              ),
-              ItemHeaderColumn(
-                nameColumn: 'Data criação',
-                widthColumn: 100,
-                indexHeader: 5,
-              ),
-              ItemHeaderColumn(
-                nameColumn: 'Responsável',
-                widthColumn: 100,
-                indexHeader: 6,
-              ),
-            ],
-          ),
-        ),
         ChangeNotifierProvider(
           create: (context) => TasksController(
             tasks: [
@@ -111,7 +121,7 @@ void main() {
                 dateCreate: DateTime.now(),
                 deliveryDate: DateTime.now(),
                 responsible: 'Gabriel Campos Marques',
-                pictureResponsible: bytes,
+                pictureResponsible: bytesGabriel,
                 priorityColor: priorityHigh,
                 priorityIcon: Icons.keyboard_double_arrow_down,
                 iconCheckBox: Icons.check_box_outline_blank_rounded,
@@ -125,7 +135,7 @@ void main() {
                 dateCreate: DateTime.now(),
                 deliveryDate: DateTime.now(),
                 responsible: 'Gabriel Campos Marques',
-                pictureResponsible: bytes,
+                pictureResponsible: bytesGabriel,
                 priorityColor: priorityHigh,
                 priorityIcon: Icons.keyboard_double_arrow_down,
                 iconCheckBox: Icons.check_box_outline_blank_rounded,

@@ -12,10 +12,13 @@ class PriorityTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      priorityIcon,
-      size: 30,
-      color: priorityColor,
+    return SizedBox(
+      width: 50,
+      child: Icon(
+        priorityIcon,
+        size: 30,
+        color: priorityColor,
+      ),
     );
   }
 }

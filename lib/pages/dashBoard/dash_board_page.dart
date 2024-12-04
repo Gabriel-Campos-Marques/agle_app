@@ -1,10 +1,15 @@
+import 'dart:typed_data';
+
+import 'package:agle_app/controllers/users.controller.dart';
 import 'package:agle_app/pages/new_note.dart';
 import 'package:agle_app/pages/new_task.dart';
 import 'package:agle_app/pages/widgets/app_bar_agle.dart';
 import 'package:agle_app/pages/widgets/button_agle.dart';
+import 'package:agle_app/pages/widgets/card_dash_board.dart';
 import 'package:agle_app/utils/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({super.key});
@@ -53,8 +58,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           const Row(
             children: [
-              CardDashBoard(),
-              CardDashBoard(),
+              CardDashBoard(
+                titleCard: 'Anotações por áreas',
+              ),
+              CardDashBoard(
+                titleCard: 'Tarefas por áreas',
+              ),
             ],
           ),
           Row(
@@ -76,113 +85,115 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           fontSize: 20,
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            width: 200,
-                            child: PieChart(
-                              PieChartData(
-                                sectionsSpace: 0,
-                                centerSpaceRadius: 30,
-                                pieTouchData: PieTouchData(
-                                  touchCallback:
-                                      (FlTouchEvent event, pieTouchResponse) {
-                                    setState(
-                                      () {
-                                        if (!event
-                                                .isInterestedForInteractions ||
-                                            pieTouchResponse == null ||
-                                            pieTouchResponse.touchedSection ==
-                                                null) {
-                                          touchedIndex = -1;
-                                          return;
-                                        }
-                                        touchedIndex = pieTouchResponse
-                                            .touchedSection!
-                                            .touchedSectionIndex;
-                                      },
-                                    );
-                                  },
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              width: 200,
+                              child: PieChart(
+                                PieChartData(
+                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 30,
+                                  pieTouchData: PieTouchData(
+                                    touchCallback:
+                                        (FlTouchEvent event, pieTouchResponse) {
+                                      setState(
+                                        () {
+                                          if (!event
+                                                  .isInterestedForInteractions ||
+                                              pieTouchResponse == null ||
+                                              pieTouchResponse.touchedSection ==
+                                                  null) {
+                                            touchedIndex = -1;
+                                            return;
+                                          }
+                                          touchedIndex = pieTouchResponse
+                                              .touchedSection!
+                                              .touchedSectionIndex;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  sections: showingSections(),
                                 ),
-                                sections: showingSections(),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 400,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.square_rounded,
-                                      color: Colors.purple,
-                                      size: 50,
-                                    ),
-                                    Text(
-                                      'Gabriel',
-                                      style: TextStyle(
-                                        color: textColorPrimary,
-                                        fontSize: 18,
+                            SizedBox(
+                              width: 400,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.square_rounded,
+                                        color: Colors.purple,
+                                        size: 50,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.square_rounded,
-                                      color: Colors.blue,
-                                      size: 50,
-                                    ),
-                                    Text(
-                                      'Luiz',
-                                      style: TextStyle(
-                                        color: textColorPrimary,
-                                        fontSize: 18,
+                                      Text(
+                                        'Gabriel',
+                                        style: TextStyle(
+                                          color: textColorPrimary,
+                                          fontSize: 18,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.square_rounded,
+                                        color: Colors.blue,
+                                        size: 50,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.square_rounded,
-                                      color: Colors.yellow,
-                                      size: 50,
-                                    ),
-                                    Text(
-                                      'Elton',
-                                      style: TextStyle(
-                                        color: textColorPrimary,
-                                        fontSize: 18,
+                                      Text(
+                                        'Luiz',
+                                        style: TextStyle(
+                                          color: textColorPrimary,
+                                          fontSize: 18,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.square_rounded,
+                                        color: Colors.yellow,
+                                        size: 50,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.square_rounded,
-                                      color: Colors.green,
-                                      size: 50,
-                                    ),
-                                    Text(
-                                      'André',
-                                      style: TextStyle(
-                                        color: textColorPrimary,
-                                        fontSize: 18,
+                                      Text(
+                                        'Elton',
+                                        style: TextStyle(
+                                          color: textColorPrimary,
+                                          fontSize: 18,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.square_rounded,
+                                        color: Colors.green,
+                                        size: 50,
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                                      Text(
+                                        'André',
+                                        style: TextStyle(
+                                          color: textColorPrimary,
+                                          fontSize: 18,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -210,68 +221,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 40,
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            color: secondColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                height: 28,
-                                width: 28,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: secondColor,
-                                ),
-                                child: Image.asset('assets/images/image.png'),
-                              ),
-                              Text(
-                                'Gabriel Marques',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: textColorPrimary,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.task_alt,
-                                    size: 18,
-                                    color: textColorPrimary,
-                                  ),
-                                  Text(
-                                    '150',
-                                    style: TextStyle(
-                                      color: textColorPrimary,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.sticky_note_2,
-                                    size: 18,
-                                    color: textColorPrimary,
-                                  ),
-                                  Text(
-                                    '150',
-                                    style: TextStyle(
-                                      color: textColorPrimary,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                      const Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: ItemColaboradores(),
                         ),
                       ),
                     ],
@@ -351,128 +304,119 @@ class _DashBoardPageState extends State<DashBoardPage> {
   }
 }
 
-class CardDashBoard extends StatelessWidget {
-  const CardDashBoard({
+class ItemColaboradores extends StatelessWidget {
+  const ItemColaboradores({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const NameCardDashBoard(),
-          Container(
-            height: 300,
-            width: 400,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const ItemCardDashBoard(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Ver mais',
-                    style: TextStyle(
-                      color: textColorPrimary,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ItemCardDashBoard extends StatelessWidget {
-  const ItemCardDashBoard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: double.maxFinite,
-        height: 60,
-        decoration: BoxDecoration(
-          color: secondColor,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: const [
-            BoxShadow(
-              blurRadius: 4,
-              offset: Offset(0, 3),
-              color: Color.fromRGBO(0, 0, 0, 0.15),
-            )
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.edit,
-                    color: textColorPrimary,
-                    size: 25,
-                  ),
-                  Text(
-                    'Parte escrita',
-                    style: TextStyle(
-                      color: textColorPrimary,
-                      fontSize: 25,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Qtd. 20',
-                style: TextStyle(
-                  color: textColorSecond,
-                  fontSize: 20,
+    return Consumer<UsersController>(
+      builder: (context, UsersController list, child) {
+        return ListView.builder(
+          itemCount: list.users.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(1, 4, 1, 4),
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: secondColor,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Colaboradores(
+                  image: list.users[index].image,
+                  nameUser: list.users[index].name,
+                  numberNotes: 150,
+                  numberTask: 150,
                 ),
               ),
-            )
-          ],
-        ),
-      ),
+            );
+          },
+        );
+      },
     );
   }
 }
 
-class NameCardDashBoard extends StatelessWidget {
-  const NameCardDashBoard({
+class Colaboradores extends StatelessWidget {
+  const Colaboradores({
     super.key,
+    required this.image,
+    required this.nameUser,
+    required this.numberTask,
+    required this.numberNotes,
   });
+
+  final Uint8List image;
+  final String nameUser;
+  final int numberTask;
+  final int numberNotes;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Text(
-        'Anotações por áreas',
-        style: TextStyle(
-          color: textColorPrimary,
-          fontSize: 20,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ClipOval(
+            child: Image.memory(
+              height: 30,
+              width: 30,
+              image,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
+        Expanded(
+          child: Text(
+            nameUser,
+            style: TextStyle(
+              fontSize: 14,
+              color: textColorPrimary,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0, right: 4),
+          child: Row(
+            children: [
+              Icon(
+                Icons.task_alt,
+                size: 18,
+                color: textColorPrimary,
+              ),
+              Text(
+                '$numberTask',
+                style: TextStyle(
+                  color: textColorPrimary,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0, right: 4),
+          child: Row(
+            children: [
+              Icon(
+                Icons.sticky_note_2,
+                size: 18,
+                color: textColorPrimary,
+              ),
+              Text(
+                '$numberNotes',
+                style: TextStyle(
+                  color: textColorPrimary,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

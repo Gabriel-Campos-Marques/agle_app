@@ -11,11 +11,14 @@ class DateCreate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      dataCriacao,
-      style: TextStyle(
-        color: textColorPrimary,
-        fontSize: 14,
+    return SizedBox(
+      width: 100,
+      child: Text(
+        dataCriacao,
+        style: TextStyle(
+          color: textColorPrimary,
+          fontSize: 14,
+        ),
       ),
     );
   }

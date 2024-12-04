@@ -15,28 +15,32 @@ class UserResponsible extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: secondColor,
+    return SizedBox(
+      width: 500,
+      child: Row(
+        children: [
+          ClipOval(
+            child: Image.memory(
+              height: 40,
+              width: 40,
+              bytes,
+              fit: BoxFit.cover,
+            ),
           ),
-          child: Image.memory(
-            bytes,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Text(
-          userResponsible,
-          style: TextStyle(
-            color: textColorPrimary,
-            fontSize: 12,
-          ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(left: 4.0),
+            child: Expanded(
+              child: Text(
+                userResponsible,
+                style: TextStyle(
+                  color: textColorPrimary,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }

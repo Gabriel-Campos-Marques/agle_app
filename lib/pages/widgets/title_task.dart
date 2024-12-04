@@ -11,11 +11,13 @@ class TitleTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      titleTask,
-      style: TextStyle(
-        color: textColorPrimary,
-        fontSize: 14,
+    return Expanded(
+      child: Text(
+        titleTask,
+        style: TextStyle(
+          color: textColorPrimary,
+          fontSize: 14,
+        ),
       ),
     );
   }

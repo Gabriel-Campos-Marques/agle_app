@@ -11,11 +11,14 @@ class AreaTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      area,
-      style: TextStyle(
-        color: textColorPrimary,
-        fontSize: 14,
+    return SizedBox(
+      width: 60,
+      child: Text(
+        area,
+        style: TextStyle(
+          color: textColorPrimary,
+          fontSize: 14,
+        ),
       ),
     );
   }
