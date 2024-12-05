@@ -11,14 +11,14 @@ class ItemsMenuBarController extends ChangeNotifier {
 
   void alterSelectedMenuBar({required int index}) {
     for (var item in items) {
-      if (item.index == 4) {
-        item.iconAreaClick = !item.iconAreaClick;
-      }
       if (item.index == index && item.index != 4) {
         item.selected = true;
       } else {
         item.selected = false;
       }
+    }
+    if (index == 4) {
+      items[index].iconAreaClick = !items[index].iconAreaClick;
     }
     notifyListeners();
   }

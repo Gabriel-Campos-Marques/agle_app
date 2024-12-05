@@ -1,4 +1,5 @@
 import 'package:agle_app/controllers/type_task_controller.dart';
+import 'package:agle_app/pages/new_task.dart';
 import 'package:agle_app/pages/widgets/button_agle.dart';
 import 'package:agle_app/pages/widgets/search_agle.dart';
 import 'package:agle_app/pages/widgets/select_task_page.dart';
@@ -36,9 +37,16 @@ class TaskPage extends StatelessWidget {
                           ],
                         ),
                         ButtonAgle(
-                          textButton: 'Nova Tarefa',
-                          function: () {},
-                        )
+                          textButton: 'Nova tarefa',
+                          function: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const NewTask();
+                              },
+                            );
+                          },
+                        ),
                       ],
                     ),
                     Consumer<TypeTaskController>(

@@ -1,5 +1,8 @@
+import 'package:agle_app/controllers/tasks_controller.dart';
+import 'package:agle_app/models/tasks.dart';
 import 'package:agle_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewTask extends StatefulWidget {
   const NewTask({
@@ -27,6 +30,12 @@ class _NewTaskState extends State<NewTask> {
     'Apresentação'
   ];
   final List<String> optionsUsers = ['Gabriel', 'Luiz', 'Elton', 'André'];
+
+  TextEditingController textEditingControllerTitle = TextEditingController();
+  TextEditingController textEditingControllerDescription =
+      TextEditingController();
+  TextEditingController textEditingControllerDateTask = TextEditingController();
+  TextEditingController textEditingControllerArea = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +100,7 @@ class _NewTaskState extends State<NewTask> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
                         child: TextFormField(
+                          controller: textEditingControllerTitle,
                           cursorColor: textColorPrimary,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -130,6 +140,7 @@ class _NewTaskState extends State<NewTask> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0, right: 8),
                         child: TextFormField(
+                          controller: textEditingControllerDescription,
                           cursorColor: textColorPrimary,
                           style: TextStyle(
                             fontSize: 16,
@@ -214,6 +225,7 @@ class _NewTaskState extends State<NewTask> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: TextFormField(
+                            controller: textEditingControllerDateTask,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: textColorPrimary,
@@ -331,26 +343,39 @@ class _NewTaskState extends State<NewTask> {
               ),
             ),
             Center(
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: thirdColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Center(
-                    child: Text(
-                      'Salvar e criar',
-                      style: TextStyle(
-                        color: textColorThird,
-                        fontSize: 18,
+              child: Consumer<TasksController>(
+                builder: (context, TasksController listTasks, child) {
+                  return InkWell(
+                    onTap: () {
+                      listTasks.addTask(Tasks(
+                        title: textEditingControllerTitle.text,
+                        area: selectedValueArea!,
+                        dateCreate: DateTime.now(),
+                        deliveryDate: DateTime.parse('2024-02-14'),
+                        responsible: selectedValueUser!,
+                        description: textEditingControllerDescription.text,
+                        duration: selectedValueDuration!,
+                      ));
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: 200,
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: thirdColor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Center(
+                        child: Text(
+                          'Salvar e criar',
+                          style: TextStyle(
+                            color: textColorThird,
+                            fontSize: 18,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ),
           ],

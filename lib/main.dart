@@ -17,8 +17,25 @@ import 'package:agle_app/theme/theme.dart';
 import 'package:agle_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
+
+  WindowOptions windowOptions = const WindowOptions(
+    size: Size(800, 600),
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.normal,
+  );
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.setFullScreen(true);
+    await windowManager.show();
+    await windowManager.focus();
+  });
+
   runApp(
     MultiProvider(
       providers: [
@@ -59,6 +76,7 @@ void main() {
             Areas(nameArea: 'Parte escrita', index: 0),
             Areas(nameArea: 'Desenvolvimento', index: 1),
             Areas(nameArea: 'Custos', index: 2),
+            Areas(nameArea: 'Apresentação', index: 3),
           ]),
         ),
         ChangeNotifierProvider(
@@ -125,13 +143,15 @@ void main() {
                 priorityColor: priorityHigh,
                 priorityIcon: Icons.keyboard_double_arrow_down,
                 iconCheckBox: Icons.check_box_outline_blank_rounded,
+                description: 'Teste',
+                duration: '2 horas',
               ),
               Tasks(
                 code: 'AI-247',
-                title: 'Como resolver outro problema?',
-                area: 'Estudos',
+                title: 'Como resolver seus problemas?',
+                area: 'Desenvolvimento',
                 priority: 5,
-                status: 'Em aberto',
+                status: 'Em andamento',
                 dateCreate: DateTime.now(),
                 deliveryDate: DateTime.now(),
                 responsible: 'Gabriel Campos Marques',
@@ -139,6 +159,8 @@ void main() {
                 priorityColor: priorityHigh,
                 priorityIcon: Icons.keyboard_double_arrow_down,
                 iconCheckBox: Icons.check_box_outline_blank_rounded,
+                description: 'Teste Gabriel valendo',
+                duration: '2 horas',
               ),
             ],
           ),
